@@ -54,6 +54,8 @@ if (constellationCanvas) {
     let particles = [];
     let width = 0;
     let height = 0;
+    let isVisible = false;
+    let animationFrame = null;
 
     const createParticles = () => {
       particles = [];
@@ -104,7 +106,8 @@ if (constellationCanvas) {
 
     const resizeCanvas = () => {
       const bounds = constellationCanvas.getBoundingClientRect();
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      const mobilePixelRatio = window.matchMedia('(max-width: 720px)').matches ? 1.25 : 2;
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, mobilePixelRatio);
       width = bounds.width;
       height = bounds.height;
       constellationCanvas.width = Math.round(width * pixelRatio);
@@ -114,6 +117,7 @@ if (constellationCanvas) {
     };
 
     const render = (time = 0) => {
+      animationFrame = null;
       context.clearRect(0, 0, width, height);
 
       particles.forEach((particle) => {
@@ -149,7 +153,10 @@ if (constellationCanvas) {
 
       context.globalAlpha = 1;
       context.shadowBlur = 0;
-      requestAnimationFrame(render);
+
+      if (isVisible) {
+        animationFrame = requestAnimationFrame(render);
+      }
     };
 
     constellationCanvas.addEventListener('pointermove', (event) => {
@@ -164,8 +171,17 @@ if (constellationCanvas) {
     });
 
     new ResizeObserver(resizeCanvas).observe(constellationCanvas);
+    new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+
+      if (isVisible && animationFrame === null) {
+        animationFrame = requestAnimationFrame(render);
+      } else if (!isVisible && animationFrame !== null) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = null;
+      }
+    }).observe(constellationCanvas);
     resizeCanvas();
-    requestAnimationFrame(render);
   }
 }
 

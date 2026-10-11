@@ -1374,6 +1374,15 @@ p {
 }
 
 @media (max-width: 720px) {
+  body::before {
+    position: absolute;
+    background:
+      linear-gradient(180deg, rgba(3, 9, 17, 0.72), rgba(3, 9, 17, 0.9)),
+      url("PVN Background ARt2.png") center top / auto 100vh no-repeat;
+    filter: none;
+    transform: none;
+  }
+
   .nav-toggle {
     display: block;
   }
