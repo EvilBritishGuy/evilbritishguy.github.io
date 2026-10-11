@@ -244,6 +244,12 @@ p {
   display: inline-block;
 }
 
+.youtube-contact-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  object-fit: contain;
+}
+
 .youtube-icon {
   color: #ff0000;
   fill: currentColor;
