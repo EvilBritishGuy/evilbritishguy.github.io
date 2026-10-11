@@ -24,13 +24,24 @@ html {
 }
 
 body {
+  position: relative;
   margin: 0;
   font-family: "Inter", sans-serif;
+  background: rgba(3, 9, 17, 0.9);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
   background:
     linear-gradient(180deg, rgba(3, 9, 17, 0.72), rgba(3, 9, 17, 0.9)),
     url("PVN Background ARt2.png") center center / cover no-repeat fixed;
-  color: var(--text);
-  line-height: 1.6;
+  filter: blur(10px) brightness(0.9) saturate(0.9);
+  transform: scale(1.08);
+  z-index: -1;
 }
 
 a {
@@ -222,6 +233,22 @@ p {
   border-color: var(--line);
   background: rgba(255, 255, 255, 0.01);
   color: var(--text);
+}
+
+.contact-link {
+  gap: 0.7rem;
+}
+
+.contact-link-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.youtube-icon {
+  color: #ff0000;
+  fill: currentColor;
 }
 
 .hero-meta {
